@@ -1,0 +1,20 @@
+{
+    "name": "gency/laravel-graphql-filter",
+    "description": "Define GraphQL schema for connection filtering using Laravel filterable models",
+    "require": {
+        "folklore/graphql": "dev-relay",
+        "gency/laravel-filterable": "^1.0"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Gency",
+            "email": "hello@gency.com.au"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Gency\\GraphQLFilter\\": "src"
+        }
+    }
+}
