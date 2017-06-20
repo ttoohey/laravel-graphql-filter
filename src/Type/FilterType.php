@@ -33,7 +33,7 @@ class FilterType extends InputType
     }
     
     public function getTypeName() {
-        return $this->getModelNmae() . 'Filter';
+        return $this->getModelName() . 'Filter';
     }
     
     public function getModel() {
