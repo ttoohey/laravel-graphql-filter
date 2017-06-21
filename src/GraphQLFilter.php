@@ -48,21 +48,39 @@ class GraphQLFilter
             })->flatten()->unique();
             foreach ($rules as $index => $rule) {
                 $key = "${field}_${rule}";
+                $not = "${field}_NOT_${rule}";
                 if (array_key_exists($key, $overrides) && $overrides[$key] === null) {
                     continue;
                 }
                 if ($index === 0) {
                     $k = $field;
+                    $nk = "${field}_NOT";
                 } else {
                     $k = $key;
+                    $nk = $not;
+                }
+                $fieldType = $type;
+                if ($rule === Filterable::IN) {
+                    $fieldType = Type::listOf($type);
+                } else if ($rule === Filterable::NULL) {
+                    $fieldType = Type::boolean();
                 }
                 $fieldDefinition = [
-                    'type' => $rule === Filterable::IN ? Type::listOf($type) : $type,
-                    'description' => "Filter $field using $rule rule"
+                    'type' => $fieldType,
+                    'description' => "Filter $modelName $field using $rule rule"
                 ];
                 $fields[$k] = collect($fieldDefinition)
                     ->merge(isset($overrides[$field]) ? $overrides[$field] : null)
                     ->merge(isset($overrides[$key]) ? $overrides[$key] : null);
+                if (method_exists($className, 'scopeFilterNot' . $rule)) {
+                    $fieldDefinition = [
+                        'type' => $fieldType,
+                        'description' => "Filter $modelName $field using negated $rule rule"
+                    ];
+                    $fields[$nk] = collect($fieldDefinition)
+                        ->merge(isset($overrides[$field]) ? $overrides[$field] : null)
+                        ->merge(isset($overrides[$key]) ? $overrides[$key] : null);
+                }
             }
         }
         $fields = $fields->merge([
