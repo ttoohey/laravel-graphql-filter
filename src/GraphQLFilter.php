@@ -125,7 +125,7 @@ class GraphQLFilter
             case 'Numeric':
                 return Type::float();
             case 'Boolean':
-                return Type::bool();
+                return Type::boolean();
             default:
                 return null;
         }
