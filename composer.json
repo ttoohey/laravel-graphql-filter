@@ -3,7 +3,7 @@
     "description": "Define GraphQL schema for connection filtering using Laravel filterable models",
     "require": {
         "folklore/graphql": "dev-feature/relay",
-        "gency/laravel-filterable": "^1.0.3"
+        "gency/laravel-filterable": "^1.0.8"
     },
     "license": "MIT",
     "authors": [

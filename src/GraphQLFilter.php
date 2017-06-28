@@ -44,7 +44,7 @@ class GraphQLFilter
                 continue;
             }
             $rules = collect($rules)->map(function ($rule) {
-                return Filterable::isFilterableType($rule) ? $rule::default() : $rule;
+                return Filterable::isFilterableType($rule) ? $rule::defaultRules() : $rule;
             })->flatten()->unique();
             foreach ($rules as $index => $rule) {
                 $key = "${field}_${rule}";
